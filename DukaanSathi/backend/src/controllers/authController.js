@@ -31,11 +31,10 @@ function createToken(userId) {
 }
 
 function setAuthCookie(res, token) {
-  const isProduction = process.env.NODE_ENV === "production";
   res.cookie("dukaansathi_token", token, {
     httpOnly: true,
-    secure: process.env.COOKIE_SECURE === "true" || isProduction,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     path: "/",
     maxAge: 7 * 24 * 60 * 60 * 1000
   });
@@ -163,10 +162,11 @@ export async function getMe(req, res, next) {
 export function logout(req, res) {
   res.clearCookie("dukaansathi_token", {
     httpOnly: true,
-    secure: process.env.COOKIE_SECURE === "true" || process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     path: "/"
   });
+
 
   return res.json({ success: true, message: "You have been logged out." });
 }
