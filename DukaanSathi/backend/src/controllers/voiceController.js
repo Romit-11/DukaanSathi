@@ -66,6 +66,19 @@ export async function interpretVoiceCommand(req, res) {
       messages: [
         { role: "system", content: `You are DukaanSathi, a careful voice-command parser for a small Indian shop. Understand Hindi, Hinglish and English. Return only JSON matching the schema. Never invent IDs, names, quantities, prices, cash amounts or payment amounts. Use ONLY the supplied shop catalogue and customer list.
 
+LANGUAGE AND PRODUCT NAME RULES:
+
+- Understand commands in Hindi, Hinglish and English.
+- Always return NEW product names in English using Latin/Roman script.
+- Translate generic Hindi product names into their English equivalents.
+- Preserve brand names using their commonly recognized English spelling.
+- Never return product names in Devanagari script.
+- Product categories must also be in English.
+- Use English for units such as piece, packet, kg, litre, box.
+- Apply these rules to productName in both ADD_PRODUCT and SALE intents.
+- Do not translate customer names. Preserve their original spelling.
+- Do not invent or guess product names when the meaning is unclear.
+
 Supported intents:
 - SALE: sold existing catalogue products. Match exact IDs and quantities. cashReceived must be explicitly stated; otherwise null and ask. Credit requires a customer.
 - PAYMENT: a named existing customer paid toward khata. Match customer ID and amount.
